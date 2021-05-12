@@ -3,11 +3,13 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 
 import Icon from 'components/Icon';
-import PaginationComponent from 'components/Pagination';
+import Pagination from 'components/Pagination';
+import Modal from 'components/Modal';
 import { getPhones, Phone } from 'services/smartphones';
 import Filters from './Filters';
 import ListViewCard from './ListViewCard';
 import GridViewCard from './GridViewCard';
+import Reviews from './Reviews';
 import {
   Container,
   Content,
@@ -54,6 +56,8 @@ const SmartPhonesPage: FC = () => {
   const [isListView, setIsListView] = useState(true);
   const [isPopularitySort, setIsPopularitySort] = useState(true);
   const [isAscendingSort, setIsAscendingSort] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [reviews, setReviews] = useState(0);
 
   const methods = useForm<FormValues>({
     defaultValues: {
@@ -207,6 +211,16 @@ const SmartPhonesPage: FC = () => {
     });
   };
 
+  const handleOpenModal = (reviewsAmount: number) => {
+    setIsModalOpen(true);
+    setReviews(reviewsAmount);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setReviews(0);
+  };
+
   return (
     <Container>
       <FormProvider {...methods}>
@@ -272,17 +286,19 @@ const SmartPhonesPage: FC = () => {
         ) : (
           <>
             {isListView ? (
-              data.map((item) => <ListViewCard key={item.id} data={item} />)
+              data.map((item) => (
+                <ListViewCard key={item.id} data={item} onReviewsClick={handleOpenModal} />
+              ))
             ) : (
               <ListContainer>
                 {data.map((item) => (
-                  <GridViewCard key={item.id} data={item} />
+                  <GridViewCard key={item.id} data={item} onReviewsClick={handleOpenModal} />
                 ))}
               </ListContainer>
             )}
 
             <PaginationContainer>
-              <PaginationComponent
+              <Pagination
                 totalItems={totalItems}
                 currentPage={currentPage}
                 onChangePage={setCurrentPage}
@@ -290,6 +306,9 @@ const SmartPhonesPage: FC = () => {
             </PaginationContainer>
           </>
         )}
+        <Modal isOpen={isModalOpen} title="Отзывы покупателей" onClose={handleCloseModal}>
+          <Reviews amount={reviews} />
+        </Modal>
       </Content>
     </Container>
   );

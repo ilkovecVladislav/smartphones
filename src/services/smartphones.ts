@@ -114,7 +114,7 @@ export const getPhones = ({
   popularitySort,
   ascendingSort,
 }: Params): Promise<{ data: Phone[]; total: number }> =>
-  new Promise((resolve) => setTimeout(resolve, 1)).then(() => {
+  new Promise((resolve) => setTimeout(resolve, 1000)).then(() => {
     const filteredByColor = getFilteredByColor(data, color);
     const filteredByRam = getFilteredByRam(filteredByColor, ram);
     const filteredByPromotion = getFilteredByPromotion(filteredByRam, promotion);

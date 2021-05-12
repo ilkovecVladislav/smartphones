@@ -43,9 +43,10 @@ import {
 
 type Props = {
   data: Phone;
+  onReviewsClick: (value: number) => void;
 };
 
-const SmartPhoneItem: FC<Props> = ({ data }) => {
+const SmartPhoneItem: FC<Props> = ({ data, onReviewsClick }) => {
   const { id, name, price, isFastDelivery, badges, parameters, promotion, rate, reviews } = data;
   const parametersValues = Object.values(parameters);
   const [isAddedToCompare, setIsAddedToCompare] = useState(false);
@@ -96,6 +97,12 @@ const SmartPhoneItem: FC<Props> = ({ data }) => {
     }
   };
 
+  const handleReviewsClick = () => {
+    if (reviews) {
+      onReviewsClick(reviews);
+    }
+  };
+
   return (
     <Container>
       <Content>
@@ -108,7 +115,7 @@ const SmartPhoneItem: FC<Props> = ({ data }) => {
         <Box>
           <Section width="22%">
             <Picture>
-              <Img src={phoneImage} alt={name} />
+              <Img src={phoneImage} loading="lazy" alt={name} />
             </Picture>
           </Section>
 
@@ -125,7 +132,7 @@ const SmartPhoneItem: FC<Props> = ({ data }) => {
                   <Icon key={idx} className="star" name="star" size={18} />
                 ))}
 
-                <FeedBack>{reviews} отзывов</FeedBack>
+                <FeedBack onClick={handleReviewsClick}>{reviews} отзывов</FeedBack>
               </RatingContainer>
             )}
             <CompareSection>

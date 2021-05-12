@@ -18,6 +18,8 @@ import { ReactComponent as Gift } from './svg/gift.svg';
 import { ReactComponent as Spinner } from './svg/spinner.svg';
 import { ReactComponent as Cross } from './svg/cross.svg';
 import { ReactComponent as ArrowInCircle } from './svg/arrowInCircle.svg';
+import { ReactComponent as Like } from './svg/like.svg';
+import { ReactComponent as Dislike } from './svg/dislike.svg';
 
 interface Icons {
   checked: React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -37,6 +39,8 @@ interface Icons {
   spinner: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   cross: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   arrowInCircle: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  like: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  dislike: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 }
 
 export const nameToComponentMap: Icons = {
@@ -57,6 +61,8 @@ export const nameToComponentMap: Icons = {
   spinner: Spinner,
   cross: Cross,
   arrowInCircle: ArrowInCircle,
+  like: Like,
+  dislike: Dislike,
 };
 
 export type IconName = keyof Icons;

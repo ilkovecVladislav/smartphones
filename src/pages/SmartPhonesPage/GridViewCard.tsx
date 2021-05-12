@@ -34,9 +34,10 @@ import {
 
 type Props = {
   data: Phone;
+  onReviewsClick: (value: number) => void;
 };
 
-const GridViewCard: FC<Props> = ({ data }) => {
+const GridViewCard: FC<Props> = ({ data, onReviewsClick }) => {
   const { id, name, price, isFastDelivery, badges, rate, reviews } = data;
   const [isAddedToBasket, setIsAddedToBasket] = useState(false);
 
@@ -64,6 +65,12 @@ const GridViewCard: FC<Props> = ({ data }) => {
     }
   };
 
+  const handleReviewsClick = () => {
+    if (reviews) {
+      onReviewsClick(reviews);
+    }
+  };
+
   return (
     <Container>
       <Box>
@@ -88,13 +95,13 @@ const GridViewCard: FC<Props> = ({ data }) => {
                   <Icon key={idx} className="star" name="star" size={11} />
                 ))}
 
-                <FeedBack>{reviews} отзывов</FeedBack>
+                <FeedBack onClick={handleReviewsClick}>{reviews} отзывов</FeedBack>
               </RatingContainer>
             )}
           </ProductHeader>
           <ProductBottom>
             <ImageContainer>
-              <Image src={phoneImage} width="90" height="114" alt={name} />
+              <Image src={phoneImage} width="90" height="114" loading="lazy" alt={name} />
             </ImageContainer>
             <PriceContainer>
               <OldPrice>
